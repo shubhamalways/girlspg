@@ -11,8 +11,8 @@ app = Flask(__name__)
 CORS(app)
 
 
-RAZORPAY_KEY_ID = os.getenv('rzp_test_SgZziCmSBjCyHC')
-RAZORPAY_KEY_SECRET = os.getenv('3QTFpt7CPUups0ZiYoEgOjUI')
+RAZORPAY_KEY_ID = os.getenv('RAZORPAY_KEY_ID')
+RAZORPAY_KEY_SECRET = os.getenv('RAZORPAY_KEY_SECRET')
 
 if not RAZORPAY_KEY_ID or not RAZORPAY_KEY_SECRET:
     raise ValueError("Razorpay keys missing! Check environment variables on Render.")
