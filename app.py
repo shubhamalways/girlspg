@@ -3,6 +3,7 @@ from flask_cors import CORS
 import sqlite3
 import hashlib
 import uuid
+import os
 import razorpay
 from datetime import datetime
 
@@ -10,8 +11,11 @@ app = Flask(__name__)
 CORS(app)
 
 # ===== REPLACE WITH YOUR ACTUAL TEST KEYS =====
-RAZORPAY_KEY_ID = 'rzp_test_SgZziCmSBjCyHC'
-RAZORPAY_KEY_SECRET = '3QTFpt7CPUups0ZiYoEgOjUI'
+RAZORPAY_KEY_ID = os.getenv('rzp_test_SgZziCmSBjCyHC')
+RAZORPAY_KEY_SECRET = os.getenv('3QTFpt7CPUups0ZiYoEgOjUI')
+
+if not RAZORPAY_KEY_ID or not RAZORPAY_KEY_SECRET:
+    raise ValueError("Razorpay keys missing! Check environment variables on Render.")
 # =============================================
 
 razorpay_client = razorpay.Client(auth=(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET))
