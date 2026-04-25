@@ -10,7 +10,7 @@ from datetime import datetime
 app = Flask(__name__)
 CORS(app)
 
-# ===== REPLACE WITH YOUR ACTUAL TEST KEYS =====
+
 RAZORPAY_KEY_ID = os.getenv('rzp_test_SgZziCmSBjCyHC')
 RAZORPAY_KEY_SECRET = os.getenv('3QTFpt7CPUups0ZiYoEgOjUI')
 
