@@ -50,7 +50,7 @@ let homeMap = null;
 let fullMap = null;
 
 // ==================== API BASE ====================
-const API_BASE = "http://127.0.0.1:5000/api";
+const API_BASE = "/api";
 
 // ==================== RAZORPAY KEYS (Test Mode) ====================
 const RAZORPAY_KEY = 'rzp_test_SgZziCmSBjCyHC'; // Replace with your actual test key
