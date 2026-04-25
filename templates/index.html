@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Girls PG | Premium Hostels for Women in Haryana</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav>
+  <div class="logo"><h1>🌸 Girls PG</h1></div>
+  <div class="nav-links">
+    <a href="#" data-page="pgs">PGs</a>
+    <a href="#" data-page="about">About</a>
+    <a href="#" data-page="contact">Contact</a>
+    <a href="#" data-page="location">Location</a>
+    <a href="#" data-page="bookings" id="bookingsNavLink" style="display: none;">My Bookings</a>
+    <div id="authSection">
+      <button id="authBtn" class="btn-outline">Login / Signup</button>
+      <span id="userStatus"></span>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE: PGs (Home) -->
+<div id="pgsPage" class="page active">
+  <section class="hero">
+    <h2>Safe, Stylish & Premium<br>Girls PG in Haryana</h2>
+    <div class="search-section">
+      <input type="text" id="searchInput" placeholder="🔍 Search by name or area">
+      <button id="searchBtn" class="btn-primary">Find PG</button>
+    </div>
+  </section>
+  <div class="pg-grid" id="pgGrid"></div>
+  <div style="display: flex; flex-wrap: wrap; gap: 24px; padding: 20px 5%; background: #fff5f0; margin-top: 20px;">
+    <div style="flex: 1.5; min-width: 250px;">
+      <div id="homeMiniMap" style="height: 220px; border-radius: 28px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.08);"></div>
+    </div>
+    <div style="flex: 1; background: white; border-radius: 28px; padding: 20px 25px; box-shadow: 0 8px 20px rgba(0,0,0,0.08);">
+      <h3 style="color:#b13e5c;">✨ About Girls PG</h3>
+      <p style="font-size: 0.95rem; margin-top: 10px; line-height: 1.5;">Trusted platform for women’s PG accommodations across Haryana. Verified listings, secure bookings.</p>
+      <h3 style="color:#b13e5c; margin-top: 16px;">📞 Contact</h3>
+      <p style="font-size: 0.95rem;">📧 hello@girlspg.com | 📞 +91 98765 43210</p>
+    </div>
+  </div>
+  <div style="text-align: center; padding: 40px 5%; background: #fff9f5;">
+    <h2 style="color:#b13e5c; margin-bottom: 30px;">👩‍💻 Meet the Developers</h2>
+    <div style="display: flex; justify-content: center; gap: 50px; flex-wrap: wrap;">
+      <div><div class="developer-avatar"><img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Rekha"></div><h3 style="margin-top: 12px;">Rekha</h3><p style="color: #6b5e5e;">Frontend & UI Designer</p></div>
+      <div><div class="developer-avatar"><img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Preeti"></div><h3 style="margin-top: 12px;">Preeti</h3><p style="color: #6b5e5e;">Backend & Database Architect</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: ABOUT -->
+<div id="aboutPage" class="page">
+  <section style="padding: 60px 5%; max-width: 900px; margin: auto;">
+    <h2 style="color:#b13e5c; font-size: 2.5rem;">✨ About Girls PG</h2>
+    <p style="margin-top: 25px; font-size: 1.1rem; line-height: 1.7;">We are a dedicated platform helping women find safe, comfortable, and affordable PG accommodations across Haryana. Our mission is to provide verified listings, transparent pricing, and a hassle‑free booking experience.</p>
+    <p style="margin-top: 15px; line-height: 1.7;">Every listed PG is visited by our team to ensure safety standards, hygiene, and amenities. We believe every woman deserves a home away from home.</p>
+    <div style="margin-top: 40px; display: flex; gap: 35px; flex-wrap: wrap; justify-content: center;">
+      <div style="text-align: center;"><i class="fas fa-shield-alt" style="color:#d45c7a; font-size: 2.5rem;"></i><br><strong style="margin-top: 8px; display: block;">24/7 Security</strong></div>
+      <div style="text-align: center;"><i class="fas fa-wifi" style="color:#d45c7a; font-size: 2.5rem;"></i><br><strong style="margin-top: 8px; display: block;">High‑Speed WiFi</strong></div>
+      <div style="text-align: center;"><i class="fas fa-utensils" style="color:#d45c7a; font-size: 2.5rem;"></i><br><strong style="margin-top: 8px; display: block;">Healthy Meals</strong></div>
+      <div style="text-align: center;"><i class="fas fa-hand-holding-heart" style="color:#d45c7a; font-size: 2.5rem;"></i><br><strong style="margin-top: 8px; display: block;">Female‑only Staff</strong></div>
+    </div>
+  </section>
+</div>
+
+<!-- PAGE: CONTACT -->
+<div id="contactPage" class="page">
+  <section style="padding: 60px 5%; max-width: 800px; margin: auto;">
+    <h2 style="color:#b13e5c; font-size: 2.5rem;">📞 Contact Us</h2>
+    <div style="margin-top: 30px; background: white; padding: 35px; border-radius: 32px; box-shadow: 0 15px 30px rgba(0,0,0,0.08);">
+      <p style="margin-bottom: 12px;"><i class="fas fa-envelope" style="width: 30px; color:#d45c7a;"></i> <strong>Email:</strong> hello@girlspg.com</p>
+      <p style="margin-bottom: 12px;"><i class="fas fa-phone-alt" style="width: 30px; color:#d45c7a;"></i> <strong>Phone:</strong> +91 98765 43210</p>
+      <p style="margin-bottom: 12px;"><i class="fas fa-map-marker-alt" style="width: 30px; color:#d45c7a;"></i> <strong>Head Office:</strong> Cyber Hub, Gurugram, Haryana</p>
+      <p style="margin-bottom: 20px;"><i class="fas fa-clock" style="width: 30px; color:#d45c7a;"></i> <strong>Support Hours:</strong> 9 AM – 8 PM (Mon‑Sat)</p>
+      <hr style="margin: 25px 0;">
+      <h3 style="margin-bottom: 20px;">Get in Touch</h3>
+      <form id="contactForm">
+        <input type="text" id="contactName" placeholder="Your Name" class="enhanced-input" style="margin-bottom: 15px;">
+        <input type="email" id="contactEmail" placeholder="Your Email" class="enhanced-input" style="margin-bottom: 15px;">
+        <textarea id="contactMessage" placeholder="Message" rows="4" class="enhanced-input" style="margin-bottom: 15px;"></textarea>
+        <button type="button" id="contactSubmitBtn" class="btn-primary">Send Message</button>
+      </form>
+    </div>
+  </section>
+</div>
+
+<!-- PAGE: LOCATION -->
+<div id="locationPage" class="page">
+  <section style="padding: 30px 5%;">
+    <h2 style="margin-bottom: 20px;">📍 PG Locations in Haryana</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 30px;">
+      <div style="flex: 1; min-width: 250px; background: white; border-radius: 28px; padding: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.08);">
+        <h3 style="color:#b13e5c; margin-bottom: 15px;">🏠 All PGs</h3>
+        <div id="pgLocationsList" style="max-height: 400px; overflow-y: auto;"></div>
+      </div>
+      <div style="flex: 2; min-width: 300px;">
+        <div id="fullMap" style="height: 450px; border-radius: 28px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.08);"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- PAGE: MY BOOKINGS -->
+<div id="bookingsPage" class="page">
+  <section style="padding: 40px 5%; max-width: 1200px; margin: auto;">
+    <h2 style="color:#b13e5c; margin-bottom: 25px;">📋 My Bookings</h2>
+    <div id="bookingsList" style="background: white; border-radius: 28px; padding: 25px; box-shadow: 0 8px 20px rgba(0,0,0,0.08);">
+      <p>Loading your bookings...</p>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <p>© 2025 Girls PG – Elegant & Secure Living for Women | Secure Online Payments</p>
+</footer>
+
+<div id="toast" class="toast"></div>
+
+<!-- MODALS -->
+<div id="authModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" id="closeAuth">&times;</span>
+    <h2 id="authTitle">Login</h2>
+    <div id="authToggleMsg" style="margin-bottom: 18px; text-align: center; font-size: 0.9rem;">New user? <a href="#" id="switchToSignup" style="color:#d45c7a;">Sign up here</a></div>
+    <input type="text" id="authName" placeholder="Full Name" class="enhanced-input" style="display:none;">
+    <input type="email" id="authEmail" placeholder="Email address" class="enhanced-input">
+    <input type="password" id="authPassword" placeholder="Password" class="enhanced-input">
+    <button id="authSubmitBtn" class="btn-primary" style="margin-top: 20px; width:100%">Login</button>
+  </div>
+</div>
+
+<div id="bookingModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" id="closeBooking">&times;</span>
+    <h3>📅 Book & Pay Securely</h3>
+    <input type="hidden" id="bookPgId">
+    <p id="bookPgName" style="font-weight: 600; margin: 15px 0; background: #faf3f0; padding: 10px; border-radius: 20px; text-align: center;"></p>
+    <input type="text" id="bookName" placeholder="Full Name" class="enhanced-input" required>
+    <input type="email" id="bookEmail" placeholder="Email" class="enhanced-input">
+    <div style="display: flex; gap: 15px;">
+      <input type="date" id="checkIn" class="enhanced-input" style="flex:1">
+      <input type="date" id="checkOut" class="enhanced-input" style="flex:1">
+    </div>
+    <textarea id="specialReq" placeholder="Any special request (optional)" rows="2" class="enhanced-input"></textarea>
+    <button id="payAndConfirmBtn" class="btn-primary" style="width:100%; margin-top: 20px;">💰 Pay & Confirm Booking</button>
+    <p style="font-size: 12px; text-align: center; margin-top: 15px; color: #6b5e5e;"></p>
+  </div>
+</div>
+
+<div id="reviewModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" id="closeReview">&times;</span>
+    <h3>⭐ Rate & Review PG</h3>
+    <input type="hidden" id="reviewPgId">
+    <p id="reviewPgTitle" style="font-weight: 600; margin: 10px 0;"></p>
+    <div style="margin: 15px 0;">
+      <span>Your rating: </span>
+      <select id="ratingStars" class="enhanced-input" style="width: auto; display: inline-block; margin-left: 10px;">
+        <option value="5">⭐⭐⭐⭐⭐ 5</option>
+        <option value="4">⭐⭐⭐⭐ 4</option>
+        <option value="3">⭐⭐⭐ 3</option>
+        <option value="2">⭐⭐ 2</option>
+        <option value="1">⭐ 1</option>
+      </select>
+    </div>
+    <textarea id="reviewComment" rows="3" placeholder="Write your experience..." class="enhanced-input"></textarea>
+    <button id="submitReviewBtn" class="btn-primary" style="margin-top: 15px;">Submit Review</button>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
