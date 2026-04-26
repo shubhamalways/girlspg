@@ -550,16 +550,7 @@ function updateAuthUI() {
 }
 
 // ==================== MAPS ====================
-function initHomeMap() {
-    const container = document.getElementById("homeMiniMap");
-    if (!container) return;
-    try {
-        if (homeMap) homeMap.remove();
-        homeMap = L.map('homeMiniMap').setView([29.0588, 76.0856], 7);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap' }).addTo(homeMap);
-        pgsData.forEach(pg => L.marker([pg.lat, pg.lng]).addTo(homeMap).bindPopup(`<b>${pg.name}</b>`));
-    } catch(e) { container.innerHTML = "<p>Map error</p>"; }
-}
+
 
 function initFullMap() {
     const container = document.getElementById("fullMap");
@@ -605,6 +596,12 @@ function switchPage(pageId) {
     if (pageId === 'bookings') {
         loadMyBookings();
     }
+    function ensureMap() {
+    if (!initHomeMap()) {
+        setTimeout(ensureMap, 500); // retry after 500ms
+    }
+}
+// Call ensureMap() when the PGs page is shown.
 }
 
 // ==================== SEARCH ====================
@@ -618,3 +615,79 @@ document.querySelectorAll('.nav-links a[data-page]').forEach(link => {
 switchPage('pgs');
 initHomeMap();
 updateAuthUI();
+// Force add developer section and mini map if missing
+// ========== FIX MISSING SECTIONS (mini map + about/contact + developers) ==========
+function addMissingSections() {
+    const pgGrid = document.getElementById('pgGrid');
+    if (!pgGrid) return;
+    
+    // Check if about/map section already exists
+    if (!document.getElementById('aboutMapSection')) {
+        const sectionDiv = document.createElement('div');
+        sectionDiv.id = 'aboutMapSection';
+        sectionDiv.style.display = 'flex';
+        sectionDiv.style.flexWrap = 'wrap';
+        sectionDiv.style.gap = '20px';
+        sectionDiv.style.padding = '20px 5%';
+        sectionDiv.style.background = '#fff5f0';
+        sectionDiv.style.marginTop = '20px';
+        sectionDiv.innerHTML = `
+            <div style="flex: 1.5; min-width: 250px;">
+                <div id="homeMiniMap" style="height: 200px; border-radius: 24px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05);"></div>
+            </div>
+            <div style="flex: 1; background: white; border-radius: 24px; padding: 15px 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+                <h3 style="color:#b13e5c;">✨ About Girls PG</h3>
+                <p style="font-size: 0.9rem; margin-top: 8px;">Trusted platform for women’s PG accommodations across Haryana. Verified listings, secure bookings.</p>
+                <h3 style="color:#b13e5c; margin-top: 12px;">📞 Contact</h3>
+                <p style="font-size: 0.9rem;">📧 hello@girlspg.com | 📞 +91 98765 43210</p>
+            </div>
+        `;
+        pgGrid.insertAdjacentElement('afterend', sectionDiv);
+        console.log("✅ About/map section added");
+    }
+    
+    // Check if developers section exists
+    if (!document.getElementById('devSection')) {
+        const devSection = document.createElement('div');
+        devSection.id = 'devSection';
+        devSection.style.textAlign = 'center';
+        devSection.style.padding = '40px 5%';
+        devSection.style.background = '#fff9f5';
+        devSection.innerHTML = `
+            <h2 style="color:#b13e5c; margin-bottom:30px;">The Developers</h2>
+            <div style="display:flex; justify-content:center; gap:50px; flex-wrap:wrap;">
+                <div><h3>Rekha</h3><p style="color:#6b5e5e;">Backend & Database Architect</p></div>
+                <div><h3>Preeti</h3><p style="color:#6b5e5e;">Frontend & UI Designer</p></div>
+            </div>
+        `;
+        document.getElementById('pgsPage').appendChild(devSection);
+        console.log("✅ Developers section added");
+    }
+    
+    // Initialize map now that container exists
+    setTimeout(initHomeMap, 200);
+}
+
+// Correct map initialization function
+function initHomeMap() {
+    const container = document.getElementById("homeMiniMap");
+    if (!container) return;
+    if (window.homeMap) window.homeMap.remove();
+    try {
+        window.homeMap = L.map('homeMiniMap').setView([29.0588, 76.0856], 7);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap'
+        }).addTo(window.homeMap);
+        pgsData.forEach(pg => {
+            L.marker([pg.lat, pg.lng]).addTo(window.homeMap)
+                .bindPopup(`<b>${pg.name}</b><br>${pg.location}<br>₹${pg.price}`);
+        });
+        console.log("✅ Map initialized");
+    } catch(e) { console.error("Map error:", e); }
+}
+
+// Call after PG cards are rendered
+document.addEventListener('DOMContentLoaded', function() {
+    // Wait a bit for PG cards to render first
+    setTimeout(addMissingSections, 1000);
+});
