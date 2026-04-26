@@ -1,15 +1,16 @@
 /* Test CSS – if this works, your full CSS has an error */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
 body {
-    background: lightblue !important;
+  background: #fef9f5;
+  color: #2d2a2a;
 }
-.pg-card {
-    border: 5px solid red !important;
-    background: white !important;
-}
-.btn-primary {
-    background: green !important;
-    color: white !important;
-}
+
 * {
   margin: 0;
   padding: 0;
@@ -110,10 +111,21 @@ nav {
 .nav-links a:hover, .nav-links a.active {
   color: #e67e9f;
 }
-#authSection {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+#authBtn {
+  background: transparent;
+  border: 1.5px solid #e67e9f;
+  color: #e67e9f;
+  padding: 8px 20px;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#authBtn:hover {
+  background: #e67e9f20;
+  transform: scale(1.02);
 }
 #userStatus {
   background: #ffe5ec;
@@ -167,6 +179,24 @@ nav {
   outline: none;
   border-color: #e67e9f;
   box-shadow: 0 0 0 3px rgba(230,126,159,0.1);
+}
+#searchBtn {
+  background: linear-gradient(135deg, #e67e9f, #d45c7a);
+  border: none;
+  color: white;
+  padding: 12px 28px;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(210, 80, 110, 0.3);
+}
+
+#searchBtn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #d45c7a, #c24264);
+  box-shadow: 0 8px 20px rgba(210, 80, 110, 0.4);
 }
 
 .pg-grid {
