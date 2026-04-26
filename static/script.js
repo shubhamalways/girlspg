@@ -620,7 +620,27 @@ updateAuthUI();
 function addMissingSections() {
     const pgGrid = document.getElementById('pgGrid');
     if (!pgGrid) return;
+    
+  
+    // Initialize map now that container exists
+    setTimeout(initHomeMap, 200);
 }
+
+// Correct map initialization function
+// Make sure initHomeMap is defined correctly
+function initHomeMap() {
+    const container = document.getElementById("homeMiniMap");
+    if (!container) return;
+    if (homeMap) homeMap.remove();
+    homeMap = L.map('homeMiniMap').setView([29.0588, 76.0856], 7);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap'
+    }).addTo(homeMap);
+    pgsData.forEach(pg => {
+        L.marker([pg.lat, pg.lng]).addTo(homeMap).bindPopup(`<b>${pg.name}</b><br>${pg.location}`);
+    });
+}
+
 // Call it after the page is shown
 document.addEventListener('DOMContentLoaded', function() {
     // If PGs page is active, init map
