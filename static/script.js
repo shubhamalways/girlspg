@@ -51,6 +51,7 @@ let fullMap = null;
 
 // ==================== API BASE ====================
 const API_BASE = "/api";
+fetch("/api")
 
 // ==================== RAZORPAY KEYS (Test Mode) ====================
 const RAZORPAY_KEY = 'rzp_test_SgZziCmSBjCyHC'; // Replace with your actual test key
