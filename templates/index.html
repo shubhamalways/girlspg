@@ -1,70 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Girls PG | Premium Hostels for Women in Haryana</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Girls PG | Premium Hostels for Women in Haryana</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        /* Minimal CSS to ensure visibility – you can replace with your full style.css later */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: #fef9f5; }
+        .pg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px,1fr)); gap: 20px; padding: 20px; }
+        .pg-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .slider-container { height: 200px; background: #eee; }
+        .slider-img { width: 100%; height: 100%; object-fit: cover; }
+        .card-content { padding: 15px; }
+        .btn-outline { background: transparent; border: 1px solid #d45c7a; padding: 8px 15px; border-radius: 30px; cursor: pointer; }
+        .toast { position: fixed; bottom: 20px; right: 20px; background: #333; color: white; padding: 10px 20px; border-radius: 8px; z-index: 9999; }
+    </style>
 </head>
 <body>
 
-<nav>
-  <div class="logo"><h1>🌸 Girls PG</h1></div>
-  <div class="nav-links">
-    <a href="#" data-page="pgs">PGs</a>
-    <a href="#" data-page="about">About</a>
-    <a href="#" data-page="contact">Contact</a>
-    <a href="#" data-page="location">Location</a>
-    <a href="#" data-page="bookings" id="bookingsNavLink" style="display: none;">My Bookings</a>
-    <div id="authSection">
-      <button id="authBtn" class="btn-outline">Login / Signup</button>
-      <span id="userStatus"></span>
+<nav style="display: flex; justify-content: space-between; padding: 15px 5%; background: #fff5f0;">
+    <div class="logo"><h1>🌸 Girls PG</h1></div>
+    <div class="nav-links">
+        <a href="#" data-page="pgs">PGs</a>
+        <a href="#" data-page="about">About</a>
+        <a href="#" data-page="contact">Contact</a>
+        <a href="#" data-page="location">Location</a>
+        <a href="#" data-page="bookings" id="bookingsNavLink" style="display: none;">My Bookings</a>
+        <div id="authSection">
+            <button id="authBtn">Login / Signup</button>
+            <span id="userStatus"></span>
+        </div>
     </div>
-  </div>
 </nav>
 
-<!-- PAGE: PGs (Home) -->
+<!-- PGs Page -->
 <div id="pgsPage" class="page active">
-  <section class="hero">
-    <h2>Safe, Stylish & Premium<br>Girls PG in Haryana</h2>
-    <div class="search-section">
-      <input type="text" id="searchInput" placeholder="🔍 Search by name or area">
-      <button id="searchBtn" class="btn-primary">Find PG</button>
+    <section class="hero" style="text-align: center; padding: 50px 20px;">
+        <h2>Safe, Stylish & Premium<br>Girls PG in Haryana</h2>
+        <div class="search-section" style="margin-top: 20px;">
+            <input type="text" id="searchInput" placeholder="Search by name or area">
+            <button id="searchBtn">Find PG</button>
+        </div>
+    </section>
+
+    <!-- PG Grid -->
+    <div id="pgGrid" class="pg-grid"></div>
+
+    <!-- Mini Map + About/Contact Snippet -->
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px 5%; background: #fff0e8; margin-top: 20px;">
+        <div style="flex: 1.5; min-width: 250px;">
+            <div id="homeMiniMap" style="height: 200px; border-radius: 20px; background: #ccc;"></div>
+        </div>
+        <div style="flex: 1; background: white; border-radius: 20px; padding: 15px;">
+            <h3>✨ About Girls PG</h3>
+            <p>Trusted platform for women’s PG accommodations across Haryana.</p>
+            <h3>📞 Contact</h3>
+            <p>📧 hello@girlspg.com | 📞 +91 98765 43210</p>
+        </div>
     </div>
-  </section>
-  <div id="pgGrid" class="pg-grid"</div>
-    <!-- Mini Map -->
-<div style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px 5%; background: #fff5f0;">
-    <div style="flex: 1.5; min-width: 250px;">
-        <div id="homeMiniMap" style="height: 200px; border-radius: 24px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05);"></div>
-    </div>
-    <div style="flex: 1; background: white; border-radius: 24px; padding: 15px 20px;">
-        <h3 style="color:#b13e5c;">✨ About Girls PG</h3>
-        <p>Trusted platform for women’s PG accommodations across Haryana.</p>
-        <h3 style="color:#b13e5c;">📞 Contact</h3>
-        <p>📧 girlspg@gmail.com | 📞 +91 98765 43210</p>
+
+    <!-- Developers Section -->
+    <div style="text-align: center; padding: 40px 5%; background: #fff9f5;">
+        <h2 style="color:#b13e5c;">The Developers</h2>
+        <div style="display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; margin-top: 20px;">
+            <div><h3>Rekha</h3><p>Backend & Database Architect</p></div>
+            <div><h3>Preeti</h3><p>Frontend & UI Designer</p></div>
+        </div>
     </div>
 </div>
-  <!-- Developers Section - Only Names, No Images -->
-<div style="text-align: center; padding: 40px 5%; background: #fff9f5;">
-  <h2 style="color:#b13e5c; margin-bottom: 30px;">The Developers</h2>
-  <div style="display: flex; justify-content: center; gap: 50px; flex-wrap: wrap;">
-    <div>
-      <h3 style="margin-top: 12px;">Rekha</h3>
-      <p style="color: #6b5e5e;">Backend & Database Architect</p>
-    </div>
-    <div>
-      <h3 style="margin-top: 12px;">Preeti</h3>
-      <p style="color: #6b5e5e;">Frontend and Designing</p>
-    </div>
-  </div>
-</div>
-  </div>
-</div>
+
 
 <!-- PAGE: ABOUT -->
 <div id="aboutPage" class="page">
@@ -187,6 +196,6 @@
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="{{ url_for('static', filename='script.js') }}"></script>
+<script src="script.js"></script>
 </body>
 </html>

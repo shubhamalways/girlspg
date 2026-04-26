@@ -669,22 +669,27 @@ function addMissingSections() {
 }
 
 // Correct map initialization function
+// Make sure initHomeMap is defined correctly
 function initHomeMap() {
     const container = document.getElementById("homeMiniMap");
     if (!container) return;
-    if (window.homeMap) window.homeMap.remove();
-    try {
-        window.homeMap = L.map('homeMiniMap').setView([29.0588, 76.0856], 7);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; OpenStreetMap'
-        }).addTo(window.homeMap);
-        pgsData.forEach(pg => {
-            L.marker([pg.lat, pg.lng]).addTo(window.homeMap)
-                .bindPopup(`<b>${pg.name}</b><br>${pg.location}<br>₹${pg.price}`);
-        });
-        console.log("✅ Map initialized");
-    } catch(e) { console.error("Map error:", e); }
+    if (homeMap) homeMap.remove();
+    homeMap = L.map('homeMiniMap').setView([29.0588, 76.0856], 7);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap'
+    }).addTo(homeMap);
+    pgsData.forEach(pg => {
+        L.marker([pg.lat, pg.lng]).addTo(homeMap).bindPopup(`<b>${pg.name}</b><br>${pg.location}`);
+    });
 }
+
+// Call it after the page is shown
+document.addEventListener('DOMContentLoaded', function() {
+    // If PGs page is active, init map
+    if (document.getElementById('pgsPage').classList.contains('active')) {
+        initHomeMap();
+    }
+});
 
 // Call after PG cards are rendered
 document.addEventListener('DOMContentLoaded', function() {
